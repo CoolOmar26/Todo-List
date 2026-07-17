@@ -1,26 +1,395 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+.pageDiv {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #cbcbcb;
+  padding: 20px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+.todoContainer {
+  background-color: rgb(255, 255, 255);
+  width: 100%;
+  max-width: 500px;
+  min-height: 500px;
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+  border-radius: 15px;
+  padding: 40px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* Custom Scrollbar Styling */
+.todoContainer::-webkit-scrollbar {
+  width: 10px;
+}
+
+.todoContainer::-webkit-scrollbar-track {
+  background: transparent;
+  margin: 10px 0;
+}
+
+.todoContainer::-webkit-scrollbar-thumb {
+  background: #ddd;
+  border-radius: 4px;
+}
+
+.todoContainer::-webkit-scrollbar-thumb:hover {
+  background: #7c47ec;
+}
+hr {
+  position: relative;
+  margin-left: -40px;
+  margin-right: -40px;
+  border: 1.5px solid #e6e5e5;
+}
+.titleDiv {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+.titleImg {
+  width: 50px;
+  height: 50px;
+  background-image: linear-gradient(135deg, rgb(57, 99, 213), #7c47ec);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.titleImg img {
+  height: 40px;
+}
+.title {
+  font-size: 2rem;
+  font-weight: 500;
+  font-family: var(--inter);
+}
+
+.inputDiv {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+.inputDiv button {
+  background-image: linear-gradient(135deg, rgb(57, 99, 213), #7c47ec);
+  height: 50px;
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+  flex-shrink: 0;
+  padding: 0;
+  pointer-events: auto;
+}
+
+.inputDiv button:hover {
+  background-color: rgb(73, 113, 224);
+  transform: scale(1.05);
+}
+.inputDiv button img {
+  height: 30px;
+  width: 30px;
+}
+.inputDiv input {
+  border: solid 2px #c7c6c6;
+  border-radius: 10px;
+  padding-left: 7px;
+  flex: 1;
+  min-width: 0;
+  height: 50px;
+  outline: none;
+}
+
+.inputDiv input:focus {
+  border: solid 2px rgb(73, 113, 224);
+  outline: none;
+}
+
+.TodosDiv {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.Todo {
+  display: flex;
+  flex-direction: row;
+  border: solid 2px #c7c6c6;
+  width: 100%;
+  min-height: 60px;
+  border-radius: 10px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
+}
+
+.Todo.checked {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  background: rgba(75, 98, 248, 0.222);
+  border: solid 2px #c7c6c6;
+  transition: all 0.25s ease;
+}
+.Todo.checked p {
+  color: #666;
+  text-decoration: line-through;
+}
+.TodoButton {
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.CustomCheckbox {
+  height: 24px;
+  width: 24px;
+  flex-shrink: 0;
+  cursor: pointer;
+  border: 2px solid #c7c6c6;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  background-color: #fff;
+}
+
+.CustomCheckbox:hover {
+  border-color: #7c47ec;
+  background-color: rgba(124, 71, 236, 0.05);
+}
+
+.Todo.checked .CustomCheckbox {
+  background: linear-gradient(135deg, rgb(57, 99, 213), #7c47ec);
+  border: none;
+}
+.CustomCheckbox img {
+  height: 18px;
+  width: 18px;
+}
+.Todo p {
+  font-family: var(--montserrat);
+  font-size: 18px;
+  font-weight: 500;
+  flex: 1;
+  margin: 0;
+  overflow-wrap: anywhere;
+  overflow: hidden;
+}
+
+.TodoLeft {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  flex: 1;
+  min-width: 0;
+}
+
+.doneSection {
+  display: flex;
+  flex-direction: column;
+  margin-top: auto;
+}
+.doneDiv {
+  display: flex;
+
+  flex-direction: row;
+  margin-left: -40px;
+  margin-right: -40px;
+  padding-top: 35px;
+  padding-left: 20px;
+  padding-right: 20px;
+  align-items: center;
+  justify-content: space-between;
+}
+.doneDivLeft {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--inter);
+  color: #7c47ec;
+  font-weight: 500;
+  font-size: large;
+}
+.doneDivLeft img {
+  border: 2px solid #c7c6c6;
+  padding: 5px;
+  border-radius: 10px;
+}
+
+.DoneTasksCount {
+  font-family: var(--inter);
+  color: #7c47ec;
+  font-weight: 500;
+  font-size: large;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 640px) {
+  .pageDiv {
+    padding: 8px;
+  }
+
+  .todoContainer {
+    padding: 15px;
+    min-height: 100vh;
+    max-height: 100vh;
+    gap: 12px;
+    border-radius: 0;
+  }
+
+  hr {
+    margin-left: -15px;
+    margin-right: -15px;
+  }
+
+  .titleDiv {
+    gap: 8px;
+    margin-bottom: 5px;
+  }
+
+  .titleImg {
+    width: 35px;
+    height: 35px;
+  }
+
+  .titleImg img {
+    height: 25px;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .inputDiv {
+    gap: 6px;
+  }
+
+  .inputDiv button {
+    height: 44px;
+    width: 44px;
+    flex-shrink: 0;
+  }
+
+  .inputDiv button img {
+    height: 22px;
+    width: 22px;
+  }
+
+  .inputDiv input {
+    height: 42px;
+    padding-left: 10px;
+    font-size: 16px;
+  }
+
+  .Todo {
+    padding: 8px;
+    min-height: 50px;
+  }
+
+  .Todo p {
+    font-size: 15px;
+  }
+
+  .CustomCheckbox {
+    height: 22px;
+    width: 22px;
+  }
+
+  .CustomCheckbox img {
+    height: 16px;
+    width: 16px;
+  }
+
+  .TodosDiv {
+    gap: 8px;
+  }
+
+  .doneDiv {
+    margin-left: -15px;
+    margin-right: -15px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 15px;
+    gap: 8px;
+  }
+
+  .doneDivLeft {
+    font-size: 0.9rem;
+  }
+
+  .DoneTasksCount {
+    font-size: 0.9rem;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@media (max-width: 480px) {
+  .pageDiv {
+    padding: 0;
+  }
+
+  .todoContainer {
+    padding: 12px;
+    border-radius: 0;
+    gap: 10px;
+    min-height: 100vh;
+  }
+
+  .title {
+    font-size: 1.3rem;
+  }
+
+  .titleImg {
+    width: 32px;
+    height: 32px;
+  }
+
+  .inputDiv {
+    gap: 5px;
+  }
+
+  .inputDiv button {
+    height: 40px;
+    width: 40px;
+    flex-shrink: 0;
+  }
+
+  .inputDiv input {
+    height: 40px;
+    font-size: 16px;
+  }
+
+  .Todo {
+    padding: 8px;
+    min-height: 48px;
+  }
+
+  .TodoLeft {
+    gap: 8px;
+  }
+
+  hr {
+    margin-left: -12px;
+    margin-right: -12px;
+  }
+
+  .doneDiv {
+    margin-left: -12px;
+    margin-right: -12px;
+  }
 }
