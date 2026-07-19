@@ -4,7 +4,9 @@ import TaskInput from './components/TaskInput';
 import TodoDiv from './components/Todos';
 import { DoneTasks } from './components/DoneTasks';
 import { useState } from 'react';
-import { Denk_One } from 'next/font/google';
+import { useEffect } from 'react';
+import { readRouteCacheEntry } from 'next/dist/client/components/segment-cache/cache';
+
 type Task = {
   id: number;
   text: string;
@@ -13,7 +15,17 @@ type Task = {
 
 export default function Home() {
   const [tasks, setTask] = useState<Task[]>([]);
+  useEffect(() => {
+    const savedTodos = localStorage.getItem('todos');
 
+    if (savedTodos) {
+      setTask(JSON.parse(savedTodos));
+    }
+  }, []);
+  useEffect(() => {
+    console.log('Saving:', tasks);
+    localStorage.setItem('todos', JSON.stringify(tasks));
+  }, [tasks]);
   const addTask = (task: Task) => {
     setTask([...tasks, task]);
   };
@@ -33,11 +45,20 @@ export default function Home() {
       })
     );
   };
+
+  const CheckIfNoTask = () => {
+    if (tasks.length === 0) {
+      return (
+        <p className="NoTasksText">All caught up! Add a task to get started</p>
+      );
+    }
+  };
   return (
     <div className="pageDiv">
       <div className="todoContainer">
         <Title />
         <TaskInput onAddTask={addTask} />
+        {CheckIfNoTask()}
         <TodoDiv
           tasks={tasks}
           deleteTask={deleteTask}

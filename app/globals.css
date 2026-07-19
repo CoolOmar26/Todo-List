@@ -239,6 +239,15 @@ hr {
   font-size: large;
 }
 
+.NoTasksText {
+  font-family: var(--inter);
+  text-align: center;
+  font-weight: 500;
+  margin-top: 30px;
+  font-size: 19px;
+  color: #718096;
+}
+
 /* Mobile Responsive Styles */
 @media (max-width: 640px) {
   .pageDiv {
