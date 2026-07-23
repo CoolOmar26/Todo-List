@@ -5,6 +5,7 @@ type tasksProps = {
   deleteTask: (id: number) => void;
   CheckTaskStatus: (id: number) => void;
 };
+
 type taskProps = {
   text: string;
   id: number;
@@ -12,14 +13,38 @@ type taskProps = {
   deleteTask: (id: number) => void;
   CheckTaskStatus: (id: number) => void;
 };
+
 function Todo({ text, id, state, deleteTask, CheckTaskStatus }: taskProps) {
+  const [isConfirming, setIsConfirming] = useState(false);
+
   const handleCheck = () => {
     CheckTaskStatus(id);
-    console.log(state);
   };
+
   const handleDelete = () => {
     deleteTask(id);
+    setIsConfirming(false);
   };
+
+  if (isConfirming) {
+    return (
+      <div className="Todo">
+        <div className="confirmDeleteWrapper">
+          <span className="confirmText">Delete task?</span>
+          <button className="confirmBtn yesBtn" onClick={handleDelete}>
+            Yes
+          </button>
+          <button
+            className="confirmBtn noBtn"
+            onClick={() => setIsConfirming(false)}
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className={`Todo ${state ? 'checked' : ''}`}>
       <div className="TodoLeft">
@@ -29,13 +54,12 @@ function Todo({ text, id, state, deleteTask, CheckTaskStatus }: taskProps) {
         <p> {text}</p>
       </div>
 
-      <button className="TodoButton">
-        <img src="/trash.svg" onClick={handleDelete} />
+      <button className="TodoButton" onClick={() => setIsConfirming(true)}>
+        <img src="/trash.svg" alt="delete" />
       </button>
     </div>
   );
 }
-
 function TodoDiv({ tasks, deleteTask, CheckTaskStatus }: tasksProps) {
   const mapedTasks = tasks.map((task) => {
     return (

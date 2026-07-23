@@ -13,11 +13,11 @@
   background-color: rgb(255, 255, 255);
   width: 100%;
   max-width: 500px;
-  min-height: 500px;
+  min-height: auto;
   max-height: calc(100vh - 40px);
   overflow-y: auto;
   border-radius: 15px;
-  padding: 40px;
+  padding: 40px 40px 0px 40px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   display: flex;
   flex-direction: column;
@@ -42,17 +42,20 @@
 .todoContainer::-webkit-scrollbar-thumb:hover {
   background: #7c47ec;
 }
+
 hr {
   position: relative;
   margin-left: -40px;
   margin-right: -40px;
   border: 1.5px solid #e6e5e5;
 }
+
 .titleDiv {
   display: flex;
   gap: 15px;
   align-items: center;
 }
+
 .titleImg {
   width: 50px;
   height: 50px;
@@ -66,6 +69,7 @@ hr {
 .titleImg img {
   height: 40px;
 }
+
 .title {
   font-size: 2rem;
   font-weight: 500;
@@ -77,6 +81,7 @@ hr {
   flex-direction: row;
   gap: 10px;
 }
+
 .inputDiv button {
   background-image: linear-gradient(135deg, rgb(57, 99, 213), #7c47ec);
   height: 50px;
@@ -99,10 +104,12 @@ hr {
   background-color: rgb(73, 113, 224);
   transform: scale(1.05);
 }
+
 .inputDiv button img {
   height: 30px;
   width: 30px;
 }
+
 .inputDiv input {
   border: solid 2px #c7c6c6;
   border-radius: 10px;
@@ -123,6 +130,7 @@ hr {
   flex-direction: column;
   gap: 10px;
 }
+
 .Todo {
   display: flex;
   flex-direction: row;
@@ -144,14 +152,17 @@ hr {
   border: solid 2px #c7c6c6;
   transition: all 0.25s ease;
 }
+
 .Todo.checked p {
   color: #666;
   text-decoration: line-through;
 }
+
 .TodoButton {
   cursor: pointer;
   flex-shrink: 0;
 }
+
 .CustomCheckbox {
   height: 24px;
   width: 24px;
@@ -175,10 +186,12 @@ hr {
   background: linear-gradient(135deg, rgb(57, 99, 213), #7c47ec);
   border: none;
 }
+
 .CustomCheckbox img {
   height: 18px;
   width: 18px;
 }
+
 .Todo p {
   font-family: var(--montserrat);
   font-size: 18px;
@@ -193,7 +206,6 @@ hr {
   display: flex;
   align-items: center;
   gap: 10px;
-
   flex: 1;
   min-width: 0;
 }
@@ -201,20 +213,25 @@ hr {
 .doneSection {
   display: flex;
   flex-direction: column;
-  margin-top: auto;
+  height: fit-content; /* Fixed: Locks vertical height tight to its children */
+  flex-shrink: 0; /* Fixed: Prevents flexbox from stretching this container */
 }
+
 .doneDiv {
   display: flex;
-
   flex-direction: row;
   margin-left: -40px;
   margin-right: -40px;
-  padding-top: 35px;
+  height: auto; /* Fixed: Forces container height to be dynamic */
+  min-height: 0; /* Fixed: Clears inherited height restrictions */
+  padding-top: 15px; /* Fixed: Clean, slim top padding */
+  padding-bottom: 15px; /* Fixed: Clean, slim bottom padding */
   padding-left: 20px;
   padding-right: 20px;
   align-items: center;
   justify-content: space-between;
 }
+
 .doneDivLeft {
   display: flex;
   flex-direction: row;
@@ -226,6 +243,7 @@ hr {
   font-weight: 500;
   font-size: large;
 }
+
 .doneDivLeft img {
   border: 2px solid #c7c6c6;
   padding: 5px;
@@ -246,6 +264,52 @@ hr {
   margin-top: 30px;
   font-size: 19px;
   color: #718096;
+}
+
+/* Container that fills up the row space when confirming */
+.confirmDeleteWrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  justify-content: flex-end;
+  box-sizing: border-box;
+  height: 100%;
+}
+
+/* Red warning text on the left */
+.confirmText {
+  color: #dc2626;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-right: auto;
+}
+
+/* Shared button styling */
+.confirmBtn {
+  padding: 6px 14px;
+  border-radius: 6px;
+  border: none;
+  font-size: 0.85rem;
+  cursor: pointer;
+  font-weight: 600;
+  transition: opacity 0.2s ease;
+}
+
+.confirmBtn:hover {
+  opacity: 0.85;
+}
+
+/* Red-themed 'Yes' button */
+.yesBtn {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+/* Light gray-themed 'Cancel' button */
+.noBtn {
+  background-color: #f3f4f6;
+  color: #374151;
 }
 
 /* Mobile Responsive Styles */
@@ -334,7 +398,8 @@ hr {
     margin-right: -15px;
     padding-left: 15px;
     padding-right: 15px;
-    padding-top: 15px;
+    padding-top: 12px;
+    padding-bottom: 12px;
     gap: 8px;
   }
 
@@ -400,5 +465,7 @@ hr {
   .doneDiv {
     margin-left: -12px;
     margin-right: -12px;
+    padding-top: 10px;
+    padding-bottom: 10px;
   }
 }
