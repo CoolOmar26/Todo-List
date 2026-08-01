@@ -2,19 +2,24 @@
 import Title from './components/Title';
 import TaskInput from './components/TaskInput';
 import TodoDiv from './components/Todos';
-import { DoneTasks } from './components/DoneTasks';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { readRouteCacheEntry } from 'next/dist/client/components/segment-cache/cache';
+import SideBar from './components/SideBar';
+import FilterButtons from './components/FilterButtons';
 
 type Task = {
   id: number;
   text: string;
   completed: boolean;
+  createdAt: string;
+  priority: 'Low' | 'Medium' | 'High';
 };
 
 export default function Home() {
+  const [filter, setFilter] = useState('all');
   const [tasks, setTask] = useState<Task[]>([]);
+  const [sort, setSort] = useState('PriorityHigh');
+
   useEffect(() => {
     const savedTodos = localStorage.getItem('todos');
 
@@ -23,7 +28,6 @@ export default function Home() {
     }
   }, []);
   useEffect(() => {
-    console.log('Saving:', tasks);
     localStorage.setItem('todos', JSON.stringify(tasks));
   }, [tasks]);
   const addTask = (task: Task) => {
@@ -53,18 +57,50 @@ export default function Home() {
       );
     }
   };
+
+  const filteredTasks = tasks.filter((task) => {
+    if (filter === 'active') return !task.completed;
+    if (filter === 'completed') return task.completed;
+    return true;
+  });
+  const priorityValue = {
+    Low: 1,
+    Medium: 2,
+    High: 3,
+  };
+  const SortedTasks = filteredTasks.sort((a, b) => {
+    if (sort == 'PriorityHigh')
+      return priorityValue[b.priority] - priorityValue[a.priority];
+    if (sort == 'PriorityLow')
+      return priorityValue[a.priority] - priorityValue[b.priority];
+    if (sort == 'Newest')
+      return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+    if (sort == 'Oldest')
+      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+    return 0;
+  });
+  const tasksCount = tasks.length;
+  const completedCount = tasks.filter((task) => task.completed === true).length;
   return (
     <div className="pageDiv">
       <div className="todoContainer">
-        <Title />
-        <TaskInput onAddTask={addTask} />
-        {CheckIfNoTask()}
-        <TodoDiv
-          tasks={tasks}
-          deleteTask={deleteTask}
-          CheckTaskStatus={CheckTaskStatus}
-        />
-        <DoneTasks tasks={tasks} />
+        <SideBar />
+        <div className="MainPart">
+          <Title tasksCount={tasksCount} completedCount={completedCount} />
+          <TaskInput onAddTask={addTask} />
+          <FilterButtons
+            checkFilter={setFilter}
+            selected={filter}
+            sort={sort}
+            setSort={setSort}
+          />
+          {CheckIfNoTask()}
+          <TodoDiv
+            tasks={SortedTasks}
+            deleteTask={deleteTask}
+            CheckTaskStatus={CheckTaskStatus}
+          />
+        </div>
       </div>
     </div>
   );

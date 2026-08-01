@@ -1,9 +1,8 @@
 type tasksprops = {
-  tasks: { id: number; text: string; completed: boolean }[];
+  tasksCount: number;
+  completedCount: number;
 };
-export function DoneTasks({ tasks }: tasksprops) {
-  const tasksCount = tasks.length;
-  const completedCount = tasks.filter((task) => task.completed === true).length;
+export function DoneTasks({ tasksCount, completedCount }: tasksprops) {
   return (
     <div className="doneSection">
       <hr />
