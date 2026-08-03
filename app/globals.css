@@ -73,6 +73,32 @@
   font-weight: 500;
   font-family: var(--inter);
 }
+.SideBarTittle {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 20px;
+  gap: 10px;
+}
+.SideBarTittle p {
+  font-family: var(--inter);
+  font-weight: 500;
+  font-size: 18px;
+}
+.SideBarTittleImgDiv {
+  width: 30px;
+  height: 30px;
+  background-image: linear-gradient(135deg, rgb(57, 99, 213), #7c47ec);
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.SideBarTittleImg img {
+  height: 30px;
+  width: 30px;
+}
 
 .inputDiv {
   display: flex;
@@ -96,6 +122,8 @@
 .inputBottomDiv {
   display: flex;
   flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 }
 .priority {
   display: flex;
@@ -173,7 +201,63 @@
   padding: 0;
   pointer-events: auto;
 }
-
+.Category {
+  display: flex;
+  flex-direction: column;
+  margin-right: 10px;
+  gap: 8px;
+}
+.Category p {
+  font-family: var(--inter);
+  font-weight: 500;
+  font-size: 14px;
+}
+.SortDivCategory {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  min-width: 100px;
+  height: 50px;
+  margin-left: auto;
+  border-radius: 5px;
+  height: 35px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+.SelectSortCategory {
+  appearance: none;
+  width: 100%;
+  border: 1.5px solid #eaeaec;
+  border-radius: 5px;
+  padding: 0px 30px 0px 15px;
+  font-family: var(--inter);
+  font-size: 14px;
+  color: #65687b;
+  cursor: pointer;
+}
+.SelectSortCategory:focus {
+  border: 1.5px solid #c2c2c2;
+  outline: none;
+}
+.SortDivCategory .SortIconDivCategory {
+  width: 40px;
+  height: 100%;
+  position: absolute;
+  right: 0;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.SortIconDivCategory i {
+  font-size: 15px;
+  color: #65687b;
+}
+.SelectSortCategory option {
+  background-color: white;
+  color: #1e1f1f;
+  font-family: var(--inter);
+  font-size: 14px;
+}
 .addTaskButton:hover {
   background-color: rgb(73, 113, 224);
   transform: scale(1.05);
@@ -380,6 +464,31 @@
 .priorityDisplay.High {
   background-color: #feefef;
   color: #a25055;
+}
+.priorityDisplay.Personal {
+  background-color: #fbeffb;
+  color: #bc71c7;
+}
+.priorityDisplay.Work {
+  background-color: #f4f0fb;
+  color: #7355ce;
+}
+.priorityDisplay.Health {
+  background-color: #e0fbe6;
+  color: #36ce54;
+}
+.priorityDisplay.Study {
+  background-color: #ebfbf9;
+  color: #14b8a6;
+}
+.priorityDisplay.Shopping {
+  background-color: #fceed5;
+  color: #f59e0b;
+}
+.priorityDisplay img {
+  height: 14px;
+  width: 14px;
+  margin-right: 3px;
 }
 
 .Todo.checked .priorityDisplay {

@@ -13,12 +13,14 @@ type Task = {
   completed: boolean;
   createdAt: string;
   priority: 'Low' | 'Medium' | 'High';
+  category: string;
 };
 
 export default function Home() {
   const [filter, setFilter] = useState('all');
   const [tasks, setTask] = useState<Task[]>([]);
   const [sort, setSort] = useState('PriorityHigh');
+  const [category, setCategory] = useState('Personal');
 
   useEffect(() => {
     const savedTodos = localStorage.getItem('todos');
@@ -87,7 +89,11 @@ export default function Home() {
         <SideBar />
         <div className="MainPart">
           <Title tasksCount={tasksCount} completedCount={completedCount} />
-          <TaskInput onAddTask={addTask} />
+          <TaskInput
+            onAddTask={addTask}
+            category={category}
+            setCategory={setCategory}
+          />
           <FilterButtons
             checkFilter={setFilter}
             selected={filter}

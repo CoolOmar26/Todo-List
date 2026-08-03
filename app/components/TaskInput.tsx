@@ -2,8 +2,11 @@
 import { useState } from 'react';
 import { ChangeEvent } from 'react';
 import PriorityButtons from './PriorityButtons';
+import CategorySelect from './CategorySelect';
 type TaskInputProps = {
   onAddTask: (task: Task) => void;
+  category: string;
+  setCategory: (category: string) => void;
 };
 type Task = {
   id: number;
@@ -11,8 +14,9 @@ type Task = {
   completed: boolean;
   createdAt: string;
   priority: 'Low' | 'Medium' | 'High';
+  category: string;
 };
-function TaskInput({ onAddTask }: TaskInputProps) {
+function TaskInput({ onAddTask, category, setCategory }: TaskInputProps) {
   const [input, setInput] = useState('');
   const [priority, setPriority] = useState<'Low' | 'Medium' | 'High'>('Low');
 
@@ -23,6 +27,7 @@ function TaskInput({ onAddTask }: TaskInputProps) {
       completed: false,
       createdAt: new Date().toISOString(),
       priority: priority,
+      category: category,
     };
 
     setInput('');
@@ -49,6 +54,10 @@ function TaskInput({ onAddTask }: TaskInputProps) {
         <div className="priority">
           <p>Priority</p>
           <PriorityButtons priority={priority} setPriority={setPriority} />
+        </div>
+        <div className="Category">
+          <p>Category</p>
+          <CategorySelect category={category} setCategory={setCategory} />
         </div>
       </div>
     </div>

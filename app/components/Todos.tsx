@@ -1,5 +1,5 @@
-import { todo } from 'node:test';
 import { useState } from 'react';
+import CategoryDisplay from './CategoryDisplay';
 
 type tasksProps = {
   tasks: {
@@ -8,6 +8,7 @@ type tasksProps = {
     completed: boolean;
     createdAt: string;
     priority: string;
+    category: string;
   }[];
   deleteTask: (id: number) => void;
   CheckTaskStatus: (id: number) => void;
@@ -21,6 +22,7 @@ type taskProps = {
   deleteTask: (id: number) => void;
   CheckTaskStatus: (id: number) => void;
   priority: string;
+  category: string;
 };
 
 function Todo({
@@ -31,6 +33,7 @@ function Todo({
   deleteTask,
   CheckTaskStatus,
   priority,
+  category,
 }: taskProps) {
   const [isConfirming, setIsConfirming] = useState(false);
   const handleCheck = () => {
@@ -98,6 +101,7 @@ function Todo({
             <span className={`dot ${priority}`}></span>
             {priority}
           </div>
+          <CategoryDisplay category={category} />
           <div className="createdAtDiv">
             <img src="/calendar.svg" alt="" />
             <p className="todoDate">{getRelativeDate(createdAt)}</p>
@@ -123,6 +127,7 @@ function TodoDiv({ tasks, deleteTask, CheckTaskStatus }: tasksProps) {
         key={task.id}
         createdAt={task.createdAt}
         priority={task.priority}
+        category={task.category}
       />
     );
   });
