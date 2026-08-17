@@ -2,12 +2,12 @@ import { useState } from 'react';
 import SortSelect from './SortSelect';
 
 type checkFilterProps = {
-  checkFilter: (selected: string) => void;
+  checkFilter: (selected: FilterProps) => void;
   selected: string;
   sort: string;
   setSort: (sort: string) => void;
 };
-
+type FilterProps = 'all' | 'Today' | 'active' | 'completed';
 export default function FilterButtons({
   checkFilter,
   selected,

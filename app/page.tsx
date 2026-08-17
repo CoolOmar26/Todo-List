@@ -15,9 +15,10 @@ type Task = {
   priority: 'Low' | 'Medium' | 'High';
   category: string;
 };
+type FilterProps = 'all' | 'Today' | 'active' | 'completed';
 
 export default function Home() {
-  const [filter, setFilter] = useState('all');
+  const [filter, setFilter] = useState<FilterProps>('all');
   const [tasks, setTask] = useState<Task[]>([]);
   const [sort, setSort] = useState('PriorityHigh');
   const [category, setCategory] = useState('Personal');
@@ -61,8 +62,17 @@ export default function Home() {
   };
 
   const filteredTasks = tasks.filter((task) => {
+    const today = new Date();
+    const taskDate = new Date(task.createdAt);
+
+    const isToday =
+      taskDate.getFullYear() === today.getFullYear() &&
+      taskDate.getMonth() === today.getMonth() &&
+      taskDate.getDate() === today.getDate();
+
     if (filter === 'active') return !task.completed;
     if (filter === 'completed') return task.completed;
+    if (filter === 'Today') return isToday;
     return true;
   });
   const priorityValue = {
@@ -86,9 +96,13 @@ export default function Home() {
   return (
     <div className="pageDiv">
       <div className="todoContainer">
-        <SideBar />
+        <SideBar checkFilter={setFilter} selected={filter} />
         <div className="MainPart">
-          <Title tasksCount={tasksCount} completedCount={completedCount} />
+          <Title
+            tasksCount={tasksCount}
+            completedCount={completedCount}
+            title={filter}
+          />
           <TaskInput
             onAddTask={addTask}
             category={category}
