@@ -99,7 +99,7 @@ export default function Home() {
     }
   };
   const getEmptyTasksMessage = () => {
-    if (filteredTasks.length === 0) {
+    if (filteredTasks.length === 0 && tasks.length !== 0) {
       return (
         <p className="NoTasksText">None of the tasks passed the filters.</p>
       );
