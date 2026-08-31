@@ -7,7 +7,7 @@ type checkFilterProps = {
   sort: string;
   setSort: (sort: string) => void;
 };
-type FilterProps = 'all' | 'Today' | 'active' | 'completed';
+type FilterProps = '' | 'Today' | 'active' | 'completed';
 export default function FilterButtons({
   checkFilter,
   selected,
@@ -17,8 +17,8 @@ export default function FilterButtons({
   return (
     <div className="tabs">
       <button
-        className={selected === 'all' ? 'tab active' : 'tab'}
-        onClick={() => checkFilter('all')}
+        className={selected === '' ? 'tab active' : 'tab'}
+        onClick={() => checkFilter('')}
       >
         All
       </button>

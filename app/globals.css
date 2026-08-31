@@ -650,6 +650,102 @@
   color: #754ae9;
   background-color: rgba(204, 184, 213, 0.283);
 }
+.SideBarHr {
+  margin-right: 13px;
+  margin-left: 7px;
+  margin-top: 10px;
+  border: 1px #dbdbdb solid;
+  border-radius: 10px;
+}
+.categoriesTitle {
+  margin-left: 10px;
+  margin-top: 10px;
+  margin-bottom: 6px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #727374;
+}
+.categoriesFilterDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 4px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.CategoryFilterButton {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 2px 8px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: #1f2937;
+  font-family: var(--inter);
+  font-size: 1rem;
+  font-weight: 400;
+  cursor: pointer;
+  line-height: 1.4;
+  text-align: left;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+.CategoryFilterButton:hover {
+  color: #111827;
+  background-color: rgba(215, 209, 217, 0.283);
+}
+.CategoryFilterButton.active {
+  background-color: rgba(215, 209, 217, 0.45);
+  color: #111827;
+  font-weight: 500;
+  border-radius: 6px;
+}
+.CategoryFilterButton .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  margin: 0;
+  flex-shrink: 0;
+}
+.CategoryFilterButton.Work .dot,
+.dot.Work {
+  background-color: #3b82f6;
+}
+.CategoryFilterButton.Personal .dot,
+.dot.Personal {
+  background-color: #8b5cf6;
+}
+.CategoryFilterButton.Study .dot,
+.dot.Study {
+  background-color: #14b8a6;
+}
+.CategoryFilterButton.Health .dot,
+.dot.Health {
+  background-color: #22c55e;
+}
+.CategoryFilterButton.Shopping .dot,
+.dot.Shopping {
+  background-color: #f59e0b;
+}
+.categoryCount {
+  color: #434952;
+  font-family: var(--inter);
+  margin-left: auto;
+  min-width: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  text-align: center;
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+  margin-top: 5px;
+}
 /* Mobile Responsive Styles */
 @media (max-width: 640px) {
   .pageDiv {

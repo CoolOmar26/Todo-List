@@ -3,10 +3,10 @@ type tasksprops = {
   completedCount: number;
   title: FilterProps;
 };
-type FilterProps = 'all' | 'Today' | 'active' | 'completed';
+type FilterProps = '' | 'Today' | 'active' | 'completed';
 function Title({ tasksCount, completedCount, title }: tasksprops) {
   const titleText = {
-    all: 'All Tasks',
+    '': 'All Tasks',
     Today: "Today's Tasks ",
     active: 'Active Tasks',
     completed: 'Completed Tasks',

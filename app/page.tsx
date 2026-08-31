@@ -15,13 +15,14 @@ type Task = {
   priority: 'Low' | 'Medium' | 'High';
   category: string;
 };
-type FilterProps = 'all' | 'Today' | 'active' | 'completed';
-
+type FilterProps = '' | 'Today' | 'active' | 'completed';
+type CategoryProps = 'Work' | 'Study' | 'Personal' | 'Shopping' | 'Health' | '';
 export default function Home() {
-  const [filter, setFilter] = useState<FilterProps>('all');
+  const [filter, setFilter] = useState<FilterProps>('');
   const [tasks, setTask] = useState<Task[]>([]);
   const [sort, setSort] = useState('PriorityHigh');
   const [category, setCategory] = useState('Personal');
+  const [categoryFilter, setCategoryFilter] = useState<CategoryProps>('');
 
   useEffect(() => {
     const savedTodos = localStorage.getItem('todos');
@@ -53,14 +54,6 @@ export default function Home() {
     );
   };
 
-  const CheckIfNoTask = () => {
-    if (tasks.length === 0) {
-      return (
-        <p className="NoTasksText">All caught up! Add a task to get started</p>
-      );
-    }
-  };
-
   const filteredTasks = tasks.filter((task) => {
     const today = new Date();
     const taskDate = new Date(task.createdAt);
@@ -70,9 +63,14 @@ export default function Home() {
       taskDate.getMonth() === today.getMonth() &&
       taskDate.getDate() === today.getDate();
 
-    if (filter === 'active') return !task.completed;
-    if (filter === 'completed') return task.completed;
-    if (filter === 'Today') return isToday;
+    if (filter === 'active' && task.completed) return false;
+    if (filter === 'completed' && !task.completed) return false;
+    if (filter === 'Today' && !isToday) return false;
+
+    if (categoryFilter !== '' && categoryFilter !== task.category) {
+      return false;
+    }
+
     return true;
   });
   const priorityValue = {
@@ -85,18 +83,38 @@ export default function Home() {
       return priorityValue[b.priority] - priorityValue[a.priority];
     if (sort == 'PriorityLow')
       return priorityValue[a.priority] - priorityValue[b.priority];
-    if (sort == 'Newest')
-      return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
     if (sort == 'Oldest')
+      return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+    if (sort == 'Newest')
       return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
     return 0;
   });
   const tasksCount = tasks.length;
   const completedCount = tasks.filter((task) => task.completed === true).length;
+  const CheckIfNoTask = () => {
+    if (tasks.length === 0) {
+      return (
+        <p className="NoTasksText">All caught up! Add a task to get started</p>
+      );
+    }
+  };
+  const getEmptyTasksMessage = () => {
+    if (filteredTasks.length === 0) {
+      return (
+        <p className="NoTasksText">None of the tasks passed the filters.</p>
+      );
+    }
+  };
   return (
     <div className="pageDiv">
       <div className="todoContainer">
-        <SideBar checkFilter={setFilter} selected={filter} />
+        <SideBar
+          checkFilter={setFilter}
+          selected={filter}
+          categoryFilter={categoryFilter}
+          setCategoryFilter={setCategoryFilter}
+          tasks={tasks}
+        />
         <div className="MainPart">
           <Title
             tasksCount={tasksCount}
@@ -115,6 +133,7 @@ export default function Home() {
             setSort={setSort}
           />
           {CheckIfNoTask()}
+          {getEmptyTasksMessage()}
           <TodoDiv
             tasks={SortedTasks}
             deleteTask={deleteTask}

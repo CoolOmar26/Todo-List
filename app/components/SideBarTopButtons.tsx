@@ -3,19 +3,28 @@ import { Calendar } from 'lucide-react';
 import { Clock } from 'lucide-react';
 import { CircleCheckBig } from 'lucide-react';
 
-// Usage
-
 type checkFilterProps = {
   checkFilter: (selected: FilterProps) => void;
   selected: string;
+  categoryFilter: string;
+  setCategoryFilter: (categoryFilter: CategoryProps) => void;
 };
-type FilterProps = 'all' | 'Today' | 'active' | 'completed';
-function SideBarTopButtons({ checkFilter, selected }: checkFilterProps) {
+type FilterProps = '' | 'Today' | 'active' | 'completed';
+type CategoryProps = 'Work' | 'Study' | 'Personal' | 'Shopping' | 'Health' | '';
+function SideBarTopButtons({
+  checkFilter,
+  selected,
+  categoryFilter,
+  setCategoryFilter,
+}: checkFilterProps) {
   return (
     <div className="SideBarButtonsTopDiv">
       <button
-        className={`SideBarTopButton ${selected == 'all' ? 'active' : ''}`}
-        onClick={() => checkFilter('all')}
+        className={`SideBarTopButton ${selected == '' && categoryFilter == '' ? 'active' : ''}`}
+        onClick={() => {
+          checkFilter('');
+          setCategoryFilter('');
+        }}
       >
         <Save size={22} />
         All Tasks
